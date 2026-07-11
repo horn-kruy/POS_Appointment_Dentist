@@ -1,0 +1,134 @@
+<div class="view-container">
+  <div class="view-header">
+    <div>
+      <h1 class="view-title">Doctors Roster (`db.doctors`)</h1>
+      <p class="view-subtitle">Official Cambodian Clinic Dentists & Specialists Directory</p>
+    </div>
+    <div class="header-actions">
+      <div class="header-badge">
+        <span class="material-symbols-outlined icon">badge</span>
+        <span>{{ dashboardService.doctorsList().length }} Specialists</span>
+      </div>
+      <button class="btn-primary" (click)="openCreateModal()">
+        <span class="material-symbols-outlined">add</span>
+        Add Doctor
+      </button>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+    <div *ngFor="let doc of dashboardService.doctorsList()" class="doctor-card">
+      <div class="card-top">
+        <div class="doc-header">
+          <img [src]="doc.avatarUrl" [alt]="doc.firstName" class="doc-avatar" />
+          <div>
+            <h3 class="doc-name">{{ doc.firstName }} {{ doc.lastName }}</h3>
+            <span class="doc-id">{{ doc.id }}</span>
+          </div>
+        </div>
+        <span class="status-badge" [class.active]="doc.status === 'Active'">
+          {{ doc.status }}
+        </span>
+      </div>
+
+      <div class="doc-spec">{{ doc.position }}</div>
+
+      <div class="doc-details">
+        <div class="detail-row">
+          <span class="material-symbols-outlined icon">phone_iphone</span>
+          <span>{{ doc.phoneNumber }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="material-symbols-outlined icon">mail</span>
+          <span>{{ doc.email }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="material-symbols-outlined icon">location_on</span>
+          <span>{{ doc.address }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="material-symbols-outlined icon">event_busy</span>
+          <span>Days Off: <strong>{{ doc.dayoff.join(', ') }}</strong></span>
+        </div>
+      </div>
+
+      <div class="card-actions">
+        <button class="btn-action edit" (click)="openEditModal(doc)">
+          <span class="material-symbols-outlined icon">edit</span>
+          Edit
+        </button>
+        <button class="btn-action delete" (click)="deleteDoctor(doc.id)">
+          <span class="material-symbols-outlined icon">delete</span>
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CRUD Modal Form -->
+  <div class="modal-backdrop" *ngIf="showModal()">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 class="modal-title">{{ isEditing() ? 'Edit Doctor Record' : 'Add New Doctor' }}</h2>
+        <button class="close-btn" (click)="closeModal()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <form class="crud-form" (ngSubmit)="saveDoctor()">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Doctor ID</label>
+            <input type="text" [(ngModel)]="id" name="id" required />
+          </div>
+          <div class="form-group">
+            <label>Position / Specialty</label>
+            <input type="text" [(ngModel)]="position" name="position" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" [(ngModel)]="firstName" name="firstName" required />
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" [(ngModel)]="lastName" name="lastName" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="text" [(ngModel)]="phoneNumber" name="phoneNumber" required />
+          </div>
+          <div class="form-group">
+            <label>Status</label>
+            <select [(ngModel)]="status" name="status">
+              <option value="Active">Active</option>
+              <option value="On Leave">On Leave</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" [(ngModel)]="email" name="email" />
+        </div>
+
+        <div class="form-group">
+          <label>Address (Phnom Penh)</label>
+          <input type="text" [(ngModel)]="address" name="address" />
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" (click)="closeModal()">Cancel</button>
+          <button type="submit" class="btn-primary">
+            {{ isEditing() ? 'Update Doctor' : 'Save Doctor' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<div class="view-container">
+  <div class="view-header">
+    <div>
+      <h1 class="view-title">POS & Payments Ledger (`db.payments`)</h1>
+      <p class="view-subtitle">Cambodian Payment Gateways (ABA Bank, KHQR, ACELEDA, Cash)</p>
+    </div>
+    <div class="header-badge">
+      <span class="material-symbols-outlined icon">point_of_sale</span>
+      <span>Active POS Terminal</span>
+    </div>
+  </div>
+
+  <div class="payments-layout">
+    <!-- POS Terminal Left Side -->
+    <div class="checkout-col">
+      <app-pos-quick-checkout></app-pos-quick-checkout>
+    </div>
+
+    <!-- Payments Ledger Right Side -->
+    <div class="ledger-col">
+      <div class="ledger-card">
+        <div class="ledger-header">
+          <h2 class="ledger-title">Today's Billing Transactions</h2>
+          <span class="total-pill">Daily Total: $98.00</span>
+        </div>
+
+        <div class="invoice-item">
+          <div class="inv-top">
+            <div>
+              <span class="inv-code">PAY001-KH</span>
+              <span class="inv-patient">Borey Lim</span>
+            </div>
+            <span class="pay-method aba">ABA Bank</span>
+          </div>
+          <div class="inv-details">
+            <span>Dr. Sophea Chan · Today 09:00 AM</span>
+            <span class="inv-amount">$58.00</span>
+          </div>
+          <div class="inv-breakdown">
+            <span class="pill service">SV001 Dental Check-up ($20.00)</span>
+            <span class="pill service">SV002 Teeth Cleaning ($35.00)</span>
+            <span class="pill med">M002 Paracetamol 500mg ($3.00)</span>
+          </div>
+        </div>
+
+        <div class="invoice-item">
+          <div class="inv-top">
+            <div>
+              <span class="inv-code">PAY002-KH</span>
+              <span class="inv-patient">Channary Sok</span>
+            </div>
+            <span class="pay-method khqr">KHQR Pay</span>
+          </div>
+          <div class="inv-details">
+            <span>Dr. Virak Phan · Today 10:30 AM</span>
+            <span class="inv-amount">$40.00</span>
+          </div>
+          <div class="inv-breakdown">
+            <span class="pill service">SV006 Orthodontic Consultation ($40.00)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

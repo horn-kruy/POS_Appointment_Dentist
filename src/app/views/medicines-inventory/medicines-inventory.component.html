@@ -1,0 +1,121 @@
+<div class="view-container">
+  <div class="view-header">
+    <div>
+      <h1 class="view-title">Medicines Inventory (`db.medicines`)</h1>
+      <p class="view-subtitle">Clinic Pharmacy Stock & Prescription Formulary</p>
+    </div>
+    <div class="header-actions">
+      <div class="header-badge">
+        <span class="material-symbols-outlined icon">medication</span>
+        <span>{{ dashboardService.medicinesList().length }} Stocked Items</span>
+      </div>
+      <button class="btn-primary" (click)="openCreateModal()">
+        <span class="material-symbols-outlined">add</span>
+        Add Medicine
+      </button>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Medicine ID</th>
+          <th>Medicine Name</th>
+          <th>Description & Usage</th>
+          <th>Unit Type</th>
+          <th>Stock Count</th>
+          <th>Unit Price</th>
+          <th>Expire Date</th>
+          <th class="text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let m of dashboardService.medicinesList()">
+          <td class="id-cell">{{ m.id }}</td>
+          <td class="name-cell">{{ m.medicineName }}</td>
+          <td class="desc-cell">{{ m.description }}</td>
+          <td>
+            <span class="type-pill">{{ m.typeof }}</span>
+          </td>
+          <td>
+            <span class="stock-pill" [class.low]="m.stock < 100">
+              {{ m.stock }} Units
+            </span>
+          </td>
+          <td class="price-cell">${{ m.unitPrice.toFixed(2) }}</td>
+          <td class="date-cell">{{ m.expireDate }}</td>
+          <td class="actions-cell">
+            <button class="btn-action edit" (click)="openEditModal(m)" title="Edit">
+              <span class="material-symbols-outlined icon">edit</span>
+            </button>
+            <button class="btn-action delete" (click)="deleteMedicine(m.id)" title="Delete">
+              <span class="material-symbols-outlined icon">delete</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CRUD Modal Form -->
+  <div class="modal-backdrop" *ngIf="showModal()">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 class="modal-title">{{ isEditing() ? 'Edit Medicine Stock' : 'Add New Medicine Item' }}</h2>
+        <button class="close-btn" (click)="closeModal()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <form class="crud-form" (ngSubmit)="saveMedicine()">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Medicine ID</label>
+            <input type="text" [(ngModel)]="id" name="id" required />
+          </div>
+          <div class="form-group">
+            <label>Packaging Form</label>
+            <select [(ngModel)]="medicineType" name="medicineType">
+              <option value="box">Box</option>
+              <option value="bottle">Bottle</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Medicine Name</label>
+          <input type="text" [(ngModel)]="medicineName" name="medicineName" required />
+        </div>
+
+        <div class="form-group">
+          <label>Clinical Description / Usage</label>
+          <input type="text" [(ngModel)]="description" name="description" required />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Stock Count</label>
+            <input type="number" [(ngModel)]="stock" name="stock" required />
+          </div>
+          <div class="form-group">
+            <label>Unit Price ($ USD)</label>
+            <input type="number" step="0.01" [(ngModel)]="unitPrice" name="unitPrice" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Expire Date (YYYY-MM-DD)</label>
+          <input type="text" [(ngModel)]="expireDate" name="expireDate" required />
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" (click)="closeModal()">Cancel</button>
+          <button type="submit" class="btn-primary">
+            {{ isEditing() ? 'Update Medicine' : 'Save Medicine' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

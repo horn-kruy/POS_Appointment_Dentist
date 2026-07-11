@@ -1,0 +1,83 @@
+<div class="view-container">
+  <div class="view-header">
+    <div>
+      <h1 class="view-title">Dental Services (`db.services`)</h1>
+      <p class="view-subtitle">Official Procedure Catalog & Pricing Schedule</p>
+    </div>
+    <div class="header-actions">
+      <div class="header-badge">
+        <span class="material-symbols-outlined icon">dentistry</span>
+        <span>{{ dashboardService.servicesList().length }} Standard Procedures</span>
+      </div>
+      <button class="btn-primary" (click)="openCreateModal()">
+        <span class="material-symbols-outlined">add</span>
+        Add Service
+      </button>
+    </div>
+  </div>
+
+  <div class="services-list">
+    <div *ngFor="let s of dashboardService.servicesList()" class="service-card">
+      <div class="service-left">
+        <div class="service-code">{{ s.id }}</div>
+        <div class="service-text">
+          <h3 class="service-name">{{ s.serviceName }}</h3>
+          <p class="service-desc">{{ s.description }}</p>
+        </div>
+      </div>
+      <div class="service-right">
+        <div class="service-price">
+          ${{ s.price.toFixed(2) }}
+        </div>
+        <button class="btn-action edit" (click)="openEditModal(s)" title="Edit">
+          <span class="material-symbols-outlined icon">edit</span>
+        </button>
+        <button class="btn-action delete" (click)="deleteService(s.id)" title="Delete">
+          <span class="material-symbols-outlined icon">delete</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CRUD Modal Form -->
+  <div class="modal-backdrop" *ngIf="showModal()">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 class="modal-title">{{ isEditing() ? 'Edit Service Procedure' : 'Add New Dental Service' }}</h2>
+        <button class="close-btn" (click)="closeModal()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <form class="crud-form" (ngSubmit)="saveService()">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Service Code / ID</label>
+            <input type="text" [(ngModel)]="id" name="id" required />
+          </div>
+          <div class="form-group">
+            <label>Price ($ USD)</label>
+            <input type="number" step="0.01" [(ngModel)]="price" name="price" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Procedure Name</label>
+          <input type="text" [(ngModel)]="serviceName" name="serviceName" required />
+        </div>
+
+        <div class="form-group">
+          <label>Clinical Description & Details</label>
+          <input type="text" [(ngModel)]="description" name="description" required />
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" (click)="closeModal()">Cancel</button>
+          <button type="submit" class="btn-primary">
+            {{ isEditing() ? 'Update Service' : 'Save Service' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

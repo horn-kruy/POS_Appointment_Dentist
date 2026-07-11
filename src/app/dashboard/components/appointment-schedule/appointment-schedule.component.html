@@ -1,0 +1,97 @@
+<div class="card schedule-container">
+  <!-- Schedule Header & Filters -->
+  <div class="schedule-header">
+    <div class="header-title">
+      <h3 class="title-text">Operatory Schedule Board</h3>
+      <span class="subtitle-text">Real-time dental chair & procedure timeline</span>
+    </div>
+
+    <!-- Status Filter Pills -->
+    <div class="filter-pills">
+      <button
+        *ngFor="let tab of filterTabs"
+        class="filter-pill"
+        [class.active]="dashboardService.selectedFilter() === tab.value"
+        (click)="selectFilter(tab.value)"
+      >
+        {{ tab.label }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Operatory Chair Status Strip -->
+  <div class="chairs-strip">
+    <div *ngFor="let chair of dashboardService.chairs()" class="chair-chip">
+      <img [src]="chair.avatarUrl" [alt]="chair.doctorName" class="chair-avatar" />
+      <div class="chair-info">
+        <span class="chair-name">{{ chair.chairName }}</span>
+        <span class="doctor-name">{{ chair.doctorName }}</span>
+      </div>
+      <span
+        class="chair-status"
+        [ngClass]="{
+          'status-active': chair.status === 'In Use',
+          'status-avail': chair.status === 'Available'
+        }"
+      >
+        {{ chair.status }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Appointment List -->
+  <div class="appointment-list">
+    <div
+      *ngFor="let apt of dashboardService.filteredAppointments()"
+      class="appointment-card"
+      [class.selected]="dashboardService.selectedAppointmentId() === apt.id"
+      (click)="onSelectAppointment(apt.id)"
+    >
+      <!-- Time Column -->
+      <div class="apt-time-col">
+        <span class="apt-start">{{ apt.startTime }}</span>
+        <span class="apt-duration">{{ apt.durationMinutes }}m</span>
+      </div>
+
+      <!-- Patient & Doctor Details -->
+      <div class="apt-patient-col">
+        <img [src]="apt.patientAvatar" [alt]="apt.patientName" class="patient-avatar" />
+        <div class="patient-info">
+          <div class="patient-name-row">
+            <span class="patient-name">{{ apt.patientName }}</span>
+            <span class="patient-age">Age {{ apt.patientAge }}</span>
+          </div>
+          <span class="treatment-name">{{ apt.treatmentName }}</span>
+        </div>
+      </div>
+
+      <!-- Chair Badge -->
+      <div class="apt-chair-col">
+        <span class="chair-badge">
+          <span class="material-symbols-outlined chair-icon">chair</span>
+          {{ apt.chairName }}
+        </span>
+        <span class="doctor-sub">{{ apt.doctorName }}</span>
+      </div>
+
+      <!-- Status & Category Tag -->
+      <div class="apt-status-col">
+        <span class="badge" [ngClass]="getStatusBadgeClass(apt.status)">
+          {{ apt.status }}
+        </span>
+        <span class="category-pill">{{ apt.treatmentCategory }}</span>
+      </div>
+
+      <!-- Action Indicator -->
+      <div class="apt-action-col">
+        <span class="material-symbols-outlined action-arrow">chevron_right</span>
+      </div>
+    </div>
+
+    <!-- Empty state if search returns nothing -->
+    <div *ngIf="dashboardService.filteredAppointments().length === 0" class="empty-state">
+      <span class="material-symbols-outlined empty-icon">event_busy</span>
+      <p>No appointments matching the active filter or search query.</p>
+    </div>
+  </div>
+</div>

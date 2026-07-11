@@ -1,0 +1,99 @@
+.queue-card {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.queue-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.queue-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.queue-subtitle {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.queue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.queue-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  background: var(--bg-surface-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+}
+
+.q-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+}
+
+.q-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.q-row-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.q-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.q-status {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #d97706;
+  background: var(--amber-light);
+  padding: 1px 8px;
+  border-radius: 4px;
+}
+
+.q-row-bottom {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.q-time-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.wait-badge {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--rose-accent);
+}
+
+.checkin-time {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}

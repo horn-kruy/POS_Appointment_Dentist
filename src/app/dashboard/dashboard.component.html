@@ -1,0 +1,22 @@
+<div class="dashboard-page">
+  <!-- Top KPI Executive Pulse Row -->
+  <app-kpi-cards></app-kpi-cards>
+
+  <!-- Main Grid Layout: Left Column (Schedule + Queue), Right Column (POS Drawer + Treatment Stats) -->
+  <div class="main-content-grid">
+    <!-- Left Column: Primary Schedule Board & Lobby Queue -->
+    <div class="left-pane">
+      <app-appointment-schedule class="grid-card-schedule"></app-appointment-schedule>
+
+      <div class="bottom-split">
+        <app-waiting-room-queue class="grid-card-queue"></app-waiting-room-queue>
+        <app-treatment-stats class="grid-card-stats"></app-treatment-stats>
+      </div>
+    </div>
+
+    <!-- Right Column: Interactive POS Drawer -->
+    <div class="right-pane">
+      <app-pos-quick-checkout class="grid-card-pos"></app-pos-quick-checkout>
+    </div>
+  </div>
+</div>

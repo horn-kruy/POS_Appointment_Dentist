@@ -1,0 +1,304 @@
+.pos-card {
+  display: flex;
+  flex-direction: column;
+  padding: 22px;
+  height: 100%;
+}
+
+.pos-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pos-icon {
+  font-size: 26px;
+  color: var(--primary);
+  background: var(--primary-light);
+  padding: 8px;
+  border-radius: var(--radius-md);
+}
+
+.pos-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.pos-subtitle {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.invoice-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.patient-banner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  background: var(--bg-surface-subtle);
+  border: 1px solid var(--border-color);
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+}
+
+.invoice-number {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.patient-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.patient-meta {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.invoice-date {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.items-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  padding: 0 6px 4px;
+}
+
+.invoice-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+.item-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.code-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: var(--violet-light);
+  color: var(--violet-accent);
+  padding: 3px 7px;
+  border-radius: 6px;
+}
+
+.desc-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-desc {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.item-cat {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.item-price-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.item-price {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.ins-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #0d9488;
+  background: var(--teal-light);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.billing-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--bg-surface-subtle);
+  border: 1px solid var(--border-color);
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.ins-row {
+  color: #0d9488;
+  font-weight: 600;
+}
+
+.ins-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ins-icon {
+  font-size: 16px;
+}
+
+.discount-row {
+  color: #d97706;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 4px 0;
+}
+
+.total-row {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.total-amount {
+  color: var(--primary);
+  font-size: 1.25rem;
+}
+
+.payment-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.payment-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.payment-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.method-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-family: var(--font-main);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.method-btn:hover {
+  border-color: #94a3b8;
+}
+
+.method-btn.active {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.checkout-actions {
+  margin-top: auto;
+}
+
+.checkout-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 0.95rem;
+}
+
+.success-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  background: var(--emerald-light);
+  border: 1px solid #34d399;
+  border-radius: var(--radius-md);
+  color: #065f46;
+}
+
+.success-icon {
+  font-size: 24px;
+  color: #059669;
+}
+
+.no-invoice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.empty-pos-icon {
+  font-size: 44px;
+  margin-bottom: 8px;
+  color: #cbd5e1;
+}

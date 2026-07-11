@@ -1,0 +1,180 @@
+<div class="view-container">
+  <div class="view-header">
+    <div>
+      <h1 class="view-title">Appointments Schedule (`db.appointments`)</h1>
+      <p class="view-subtitle">Live Operatory Schedule & Patient Bookings</p>
+    </div>
+    <div class="header-actions">
+      <div class="header-badge">
+        <span class="material-symbols-outlined icon">calendar_month</span>
+        <span>{{ dashboardService.appointments().length }} Booked Appointments</span>
+      </div>
+      <button class="btn-primary" (click)="openCreateModal()">
+        <span class="material-symbols-outlined">add</span>
+        Book Appointment
+      </button>
+    </div>
+  </div>
+
+  <!-- Operatory Chairs Summary -->
+  <div class="chairs-row">
+    <div *ngFor="let chair of dashboardService.chairs()" class="chair-card">
+      <div class="chair-header">
+        <span class="chair-name">{{ chair.chairName }}</span>
+        <span class="status-pill" [class.active]="chair.status === 'In Use'">
+          {{ chair.status }}
+        </span>
+      </div>
+      <div class="chair-doc">
+        <img [src]="chair.avatarUrl" [alt]="chair.doctorName" class="chair-avatar" />
+        <div>
+          <div class="doc-name">{{ chair.doctorName }}</div>
+          <div class="doc-spec">{{ chair.specialty }}</div>
+        </div>
+      </div>
+      <div *ngIf="chair.currentPatient" class="chair-patient">
+        <span class="material-symbols-outlined icon">person</span>
+        <span>Active Patient: <strong>{{ chair.currentPatient }}</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Appointments Table -->
+  <div class="table-card">
+    <div class="table-header">
+      <h2 class="table-title">Scheduled Appointments List</h2>
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Time Slot</th>
+          <th>Patient Details</th>
+          <th>Assigned Specialist</th>
+          <th>Operatory Room</th>
+          <th>Procedure</th>
+          <th>Status</th>
+          <th>Clinical Notes</th>
+          <th class="text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let apt of dashboardService.appointments()">
+          <td class="id-cell">{{ apt.id }}</td>
+          <td class="time-cell">{{ apt.timeSlot }}</td>
+          <td>
+            <div class="patient-info">
+              <img [src]="apt.patientAvatar" [alt]="apt.patientName" class="patient-avatar" />
+              <div>
+                <div class="pat-name">{{ apt.patientName }}</div>
+                <div class="pat-phone">{{ apt.patientPhone }}</div>
+              </div>
+            </div>
+          </td>
+          <td class="doc-cell">{{ apt.doctorName }}</td>
+          <td>
+            <span class="room-pill">{{ apt.chairName }}</span>
+          </td>
+          <td>
+            <div class="treatment-name">{{ apt.treatmentName }}</div>
+            <div class="treatment-cat">{{ apt.treatmentCategory }}</div>
+          </td>
+          <td>
+            <span
+              class="status-tag"
+              [class.progress]="apt.status === 'In Progress'"
+              [class.waiting]="apt.status === 'Waiting'"
+            >
+              {{ apt.status }}
+            </span>
+          </td>
+          <td class="notes-cell">{{ apt.notes }}</td>
+          <td class="actions-cell">
+            <button class="btn-action edit" (click)="openEditModal(apt)" title="Edit">
+              <span class="material-symbols-outlined icon">edit</span>
+            </button>
+            <button class="btn-action delete" (click)="deleteAppointment(apt.id)" title="Delete">
+              <span class="material-symbols-outlined icon">delete</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CRUD Modal Form -->
+  <div class="modal-backdrop" *ngIf="showModal()">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 class="modal-title">{{ isEditing() ? 'Edit Appointment' : 'Book New Appointment' }}</h2>
+        <button class="close-btn" (click)="closeModal()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <form class="crud-form" (ngSubmit)="saveAppointment()">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Appointment ID</label>
+            <input type="text" [(ngModel)]="id" name="id" required />
+          </div>
+          <div class="form-group">
+            <label>Time Slot</label>
+            <input type="text" [(ngModel)]="timeSlot" name="timeSlot" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Patient Name</label>
+            <input type="text" [(ngModel)]="patientName" name="patientName" required />
+          </div>
+          <div class="form-group">
+            <label>Patient Phone</label>
+            <input type="text" [(ngModel)]="patientPhone" name="patientPhone" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Doctor Name</label>
+            <input type="text" [(ngModel)]="doctorName" name="doctorName" required />
+          </div>
+          <div class="form-group">
+            <label>Operatory Room</label>
+            <input type="text" [(ngModel)]="chairName" name="chairName" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Treatment Procedure</label>
+            <input type="text" [(ngModel)]="treatmentName" name="treatmentName" required />
+          </div>
+          <div class="form-group">
+            <label>Status</label>
+            <select [(ngModel)]="status" name="status">
+              <option value="Waiting">Waiting</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+              <option value="Cancelled">Cancelled</option>
+              <option value="Rescheduled">Rescheduled</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Clinical Notes</label>
+          <input type="text" [(ngModel)]="notes" name="notes" />
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" (click)="closeModal()">Cancel</button>
+          <button type="submit" class="btn-primary">
+            {{ isEditing() ? 'Update Appointment' : 'Save Appointment' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

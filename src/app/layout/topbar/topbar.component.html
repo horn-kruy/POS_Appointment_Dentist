@@ -1,0 +1,43 @@
+<header class="topbar">
+  <!-- Left Header Area: Search & Clinic Badge -->
+  <div class="topbar-left">
+    <div class="search-box">
+      <span class="material-symbols-outlined search-icon">search</span>
+      <input
+        type="text"
+        placeholder="Search patient name, dentist, or procedure..."
+        [value]="dashboardService.searchQuery()"
+        (input)="onSearchChange($event)"
+        class="search-input"
+      />
+      <span *ngIf="dashboardService.searchQuery()" class="search-hint">Filtered</span>
+    </div>
+
+  </div>
+
+  <!-- Right Header Area: Actions & Alerts -->
+  <div class="topbar-right">
+    <div class="date-display">
+      <span class="material-symbols-outlined date-icon">event</span>
+      <span>{{ todayDateString }}</span>
+    </div>
+
+    <div class="header-divider"></div>
+
+    <button class="icon-btn notification-btn" title="Notifications">
+      <span class="material-symbols-outlined">notifications</span>
+      <span class="badge-dot"></span>
+    </button>
+
+    <button class="icon-btn" title="Help & Shortcuts">
+      <span class="material-symbols-outlined">help</span>
+    </button>
+
+    <div class="header-divider"></div>
+
+    <button class="btn btn-secondary action-btn" (click)="dashboardService.setNavView('pos')">
+      <span class="material-symbols-outlined">receipt_long</span>
+      <span>New POS Bill</span>
+    </button>
+  </div>
+</header>

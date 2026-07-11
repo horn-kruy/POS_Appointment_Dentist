@@ -1,0 +1,54 @@
+<aside class="sidebar">
+  <!-- Brand Header -->
+  <div class="sidebar-header">
+    <div class="brand-logo">
+      <span class="material-symbols-outlined logo-icon">dentistry</span>
+    </div>
+    <div class="brand-text">
+      <h1 class="brand-title">DentaPOS</h1>
+      <span class="brand-subtitle">Clinical & POS Suite</span>
+    </div>
+  </div>
+
+  <!-- Main Navigation -->
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">CLINIC MANAGEMENT</div>
+    <ul class="nav-list">
+      <li *ngFor="let item of navItems">
+        <button
+          class="nav-item"
+          [class.active]="dashboardService.currentNavView() === item.id"
+          (click)="selectNav(item.id)"
+        >
+          <span class="material-symbols-outlined nav-icon">{{ item.icon }}</span>
+          <span class="nav-label">{{ item.label }}</span>
+          <span
+            *ngIf="item.badge"
+            class="nav-badge"
+            [ngClass]="'badge-' + item.badgeColor"
+          >
+            {{ item.badge }}
+          </span>
+        </button>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Doctor Profile Footer -->
+  <div class="sidebar-footer">
+    <div class="doctor-profile">
+      <img
+        src="Ch01.jpg"
+        alt="Dr. Sophea Chan"
+        class="profile-avatar"
+      />
+      <div class="profile-info">
+        <span class="profile-name">Dr. Sophea Chan</span>
+        <span class="profile-role">General Dentist</span>
+      </div>
+      <button class="logout-btn" title="Sign Out">
+        <span class="material-symbols-outlined">logout</span>
+      </button>
+    </div>
+  </div>
+</aside>

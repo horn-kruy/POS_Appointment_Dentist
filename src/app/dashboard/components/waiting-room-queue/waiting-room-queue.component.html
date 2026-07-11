@@ -1,0 +1,28 @@
+<div class="card queue-card">
+  <div class="queue-header">
+    <div class="header-left">
+      <h3 class="queue-title">Patient Waiting Room Queue</h3>
+      <span class="queue-subtitle">Live Lobby Tracker & Check-in Time</span>
+    </div>
+    <span class="badge badge-waiting">4 Waiting</span>
+  </div>
+
+  <div class="queue-list">
+    <div *ngFor="let item of dashboardService.queue()" class="queue-item">
+      <img [src]="item.patientAvatar" [alt]="item.patientName" class="q-avatar" />
+      <div class="q-info">
+        <div class="q-row-top">
+          <span class="q-name">{{ item.patientName }}</span>
+          <span class="q-status">{{ item.status }}</span>
+        </div>
+        <div class="q-row-bottom">
+          <span>{{ item.treatmentName }} · {{ item.assignedDoctor }}</span>
+        </div>
+      </div>
+      <div class="q-time-col">
+        <span class="wait-badge">{{ item.waitingMinutes }}m wait</span>
+        <span class="checkin-time">In at {{ item.checkInTime }}</span>
+      </div>
+    </div>
+  </div>
+</div>

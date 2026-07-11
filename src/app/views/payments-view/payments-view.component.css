@@ -1,0 +1,171 @@
+.view-container {
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.view-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.view-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.view-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.header-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--primary-light);
+  color: var(--primary);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.payments-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .payments-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.checkout-col,
+.ledger-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.ledger-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.ledger-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.ledger-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.total-pill {
+  background: var(--emerald-light);
+  color: #059669;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+}
+
+.invoice-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-subtle);
+}
+
+.inv-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inv-code {
+  font-family: monospace;
+  font-weight: 700;
+  color: var(--primary);
+  margin-right: 12px;
+}
+
+.inv-patient {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.pay-method {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+}
+
+.pay-method.aba {
+  background: #004b6e;
+  color: #ffffff;
+}
+
+.pay-method.khqr {
+  background: #e11d48;
+  color: #ffffff;
+}
+
+.inv-details {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.inv-amount {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #059669;
+}
+
+.inv-breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border-color);
+}
+
+.pill {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.pill.service {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.pill.med {
+  background: var(--amber-light);
+  color: #d97706;
+}

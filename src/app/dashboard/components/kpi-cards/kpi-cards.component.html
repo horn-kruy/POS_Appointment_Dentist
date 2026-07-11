@@ -1,0 +1,32 @@
+<section class="kpi-grid">
+  <div
+    *ngFor="let kpi of dashboardService.kpis()"
+    class="card kpi-card card-hover animate-fade-in"
+  >
+    <div class="kpi-top">
+      <span class="kpi-label">{{ kpi.label }}</span>
+      <div class="kpi-icon-wrap" [ngClass]="kpi.colorClass">
+        <span class="material-symbols-outlined">{{ kpi.icon }}</span>
+      </div>
+    </div>
+
+    <div class="kpi-body">
+      <h2 class="kpi-value">{{ kpi.value }}</h2>
+      <div class="kpi-footer">
+        <span
+          class="kpi-trend"
+          [ngClass]="{
+            'trend-up': kpi.trendDirection === 'up',
+            'trend-down': kpi.trendDirection === 'down',
+            'trend-neutral': kpi.trendDirection === 'neutral'
+          }"
+        >
+          <span *ngIf="kpi.trendDirection === 'up'" class="material-symbols-outlined trend-icon">trending_up</span>
+          <span *ngIf="kpi.trendDirection === 'down'" class="material-symbols-outlined trend-icon">trending_down</span>
+          {{ kpi.trendValue }}
+        </span>
+        <span class="kpi-subtext">{{ kpi.subtext }}</span>
+      </div>
+    </div>
+  </div>
+</section>

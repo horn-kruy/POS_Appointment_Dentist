@@ -1,0 +1,125 @@
+<div class="view-container">
+  <div class="view-header">
+    <div>
+      <h1 class="view-title">Patient Directory (`db.patients`)</h1>
+      <p class="view-subtitle">Registered Patients Database in Phnom Penh Clinic</p>
+    </div>
+    <div class="header-actions">
+      <div class="header-badge">
+        <span class="material-symbols-outlined icon">group</span>
+        <span>{{ dashboardService.patientsList().length }} Registered Patients</span>
+      </div>
+      <button class="btn-primary" (click)="openCreateModal()">
+        <span class="material-symbols-outlined">person_add</span>
+        Register Patient
+      </button>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Patient ID</th>
+          <th>Patient Name</th>
+          <th>Gender</th>
+          <th>Phone Number</th>
+          <th>Email Address</th>
+          <th>Address (Phnom Penh)</th>
+          <th>Created Date</th>
+          <th class="text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pat of dashboardService.patientsList()">
+          <td class="id-cell">{{ pat.id }}</td>
+          <td class="name-cell">
+            <div class="name-box">
+              <div class="avatar-circle">
+                {{ pat.firstName.charAt(0) }}{{ pat.lastName.charAt(0) }}
+              </div>
+              <span>{{ pat.firstName }} {{ pat.lastName }}</span>
+            </div>
+          </td>
+          <td>
+            <span class="gender-pill">{{ pat.gender }}</span>
+          </td>
+          <td class="phone-cell">{{ pat.phoneNumber }}</td>
+          <td class="email-cell">{{ pat.email }}</td>
+          <td class="address-cell">{{ pat.address }}</td>
+          <td class="date-cell">{{ pat.createdAt }}</td>
+          <td class="actions-cell">
+            <button class="btn-action edit" (click)="openEditModal(pat)" title="Edit">
+              <span class="material-symbols-outlined icon">edit</span>
+            </button>
+            <button class="btn-action delete" (click)="deletePatient(pat.id)" title="Delete">
+              <span class="material-symbols-outlined icon">delete</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CRUD Modal Form -->
+  <div class="modal-backdrop" *ngIf="showModal()">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 class="modal-title">{{ isEditing() ? 'Edit Patient Details' : 'Register New Patient' }}</h2>
+        <button class="close-btn" (click)="closeModal()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <form class="crud-form" (ngSubmit)="savePatient()">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Patient ID</label>
+            <input type="text" [(ngModel)]="id" name="id" required />
+          </div>
+          <div class="form-group">
+            <label>Gender</label>
+            <select [(ngModel)]="gender" name="gender">
+              <option value="Female">Female</option>
+              <option value="Male">Male</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" [(ngModel)]="firstName" name="firstName" required />
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" [(ngModel)]="lastName" name="lastName" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="text" [(ngModel)]="phoneNumber" name="phoneNumber" required />
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" [(ngModel)]="email" name="email" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Address (Phnom Penh)</label>
+          <input type="text" [(ngModel)]="address" name="address" />
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" (click)="closeModal()">Cancel</button>
+          <button type="submit" class="btn-primary">
+            {{ isEditing() ? 'Update Patient' : 'Save Patient' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

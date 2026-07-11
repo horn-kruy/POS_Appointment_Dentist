@@ -1,0 +1,132 @@
+<div class="card pos-card">
+  <!-- POS Header -->
+  <div class="pos-header">
+    <div class="header-left">
+      <span class="material-symbols-outlined pos-icon">point_of_sale</span>
+      <div>
+        <h3 class="pos-title">Point of Sale Checkout</h3>
+        <span class="pos-subtitle">Live Dental Procedure & Insurance Billing</span>
+      </div>
+    </div>
+    <span class="badge badge-in-progress">Live POS Drawer</span>
+  </div>
+
+  <!-- Active Patient Invoice Preview -->
+  <div *ngIf="dashboardService.activeInvoice() as inv; else noInvoice" class="invoice-container">
+    <div class="patient-banner">
+      <div class="patient-details">
+        <span class="invoice-number">{{ inv.invoiceId }}</span>
+        <h4 class="patient-name">{{ inv.patientName }}</h4>
+        <span class="patient-meta">{{ inv.patientPhone }} · {{ inv.doctorName }}</span>
+      </div>
+      <div class="invoice-date">
+        <span>{{ inv.appointmentDate }}</span>
+      </div>
+    </div>
+
+    <!-- Itemized Dental Procedures -->
+    <div class="items-list">
+      <div class="items-header">
+        <span>PROCEDURE CODE & DESCRIPTION</span>
+        <span>PRICE</span>
+      </div>
+
+      <div *ngFor="let item of inv.items" class="invoice-item">
+        <div class="item-info">
+          <div class="code-badge">{{ item.code }}</div>
+          <div class="desc-col">
+            <span class="item-desc">{{ item.description }}</span>
+            <span class="item-cat">{{ item.category }}</span>
+          </div>
+        </div>
+        <div class="item-price-col">
+          <span class="item-price">${{ item.unitPrice.toFixed(2) }}</span>
+          <span *ngIf="item.coveredByInsurance" class="ins-tag">
+            Ins {{ item.insuranceCoveragePercent }}%
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cost Breakdown -->
+    <div class="billing-summary">
+      <div class="summary-row">
+        <span>Procedure Subtotal</span>
+        <span>${{ inv.subtotal.toFixed(2) }}</span>
+      </div>
+      <div class="summary-row ins-row">
+        <span class="ins-label">
+          <span class="material-symbols-outlined ins-icon">shield</span>
+          Insurance Coverage Benefit
+        </span>
+        <span>-${{ inv.insuranceCoverageAmount.toFixed(2) }}</span>
+      </div>
+      <div *ngIf="inv.discountAmount > 0" class="summary-row discount-row">
+        <span>Clinic Discount</span>
+        <span>-${{ inv.discountAmount.toFixed(2) }}</span>
+      </div>
+      <div class="divider"></div>
+      <div class="summary-row total-row">
+        <span>Patient Due (Co-Pay)</span>
+        <span class="total-amount">${{ inv.totalPatientCopay.toFixed(2) }}</span>
+      </div>
+    </div>
+
+    <!-- Payment Method Switcher -->
+    <div class="payment-methods">
+      <span class="payment-label">SELECT PAYMENT METHOD</span>
+      <div class="payment-grid">
+        <button
+          *ngFor="let method of paymentMethods"
+          class="method-btn"
+          [class.active]="dashboardService.selectedPaymentMethod() === method"
+          (click)="selectPaymentMethod(method)"
+        >
+          <span *ngIf="method === 'ABA Bank'" class="material-symbols-outlined">account_balance</span>
+          <span *ngIf="method === 'KHQR'" class="material-symbols-outlined">qr_code_scanner</span>
+          <span *ngIf="method === 'Cash'" class="material-symbols-outlined">payments</span>
+          <span *ngIf="method === 'ACELEDA'" class="material-symbols-outlined">account_balance_wallet</span>
+          {{ method }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="checkout-actions">
+      <button
+        *ngIf="!paymentSuccess()"
+        class="btn btn-primary checkout-btn"
+        [disabled]="isProcessing()"
+        (click)="onProcessPayment()"
+      >
+        <span class="material-symbols-outlined">{{ isProcessing() ? 'sync' : 'lock' }}</span>
+        <span>
+          {{
+            isProcessing()
+              ? 'Processing Payment...'
+              : 'Charge $' +
+                inv.totalPatientCopay.toFixed(2) +
+                ' (' +
+                dashboardService.selectedPaymentMethod() +
+                ')'
+          }}
+        </span>
+      </button>
+
+      <div *ngIf="paymentSuccess()" class="success-banner animate-fade-in">
+        <span class="material-symbols-outlined success-icon">check_circle</span>
+        <div>
+          <strong>Payment Processed!</strong>
+          <p>Receipt generated for {{ inv.patientName }}.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noInvoice>
+    <div class="no-invoice">
+      <span class="material-symbols-outlined empty-pos-icon">receipt</span>
+      <p>Select an appointment from the schedule on the left to inspect and checkout invoice.</p>
+    </div>
+  </ng-template>
+</div>

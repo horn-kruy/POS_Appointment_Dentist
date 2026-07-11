@@ -1,0 +1,30 @@
+<div class="card stats-card">
+  <div class="stats-header">
+    <div class="header-left">
+      <h3 class="stats-title">Procedure Revenue Share</h3>
+      <span class="stats-subtitle">Top Treatments Performed Today</span>
+    </div>
+    <span class="badge badge-completed">Today's Data</span>
+  </div>
+
+  <div class="stats-list">
+    <div *ngFor="let stat of dashboardService.treatmentStats()" class="stat-item">
+      <div class="stat-meta">
+        <div class="stat-label-wrap">
+          <span class="dot" [style.background-color]="stat.color"></span>
+          <span class="stat-name">{{ stat.name }}</span>
+          <span class="stat-count">({{ stat.countToday }} procedures)</span>
+        </div>
+        <span class="stat-rev">${{ stat.revenueGenerated.toFixed(0) }}</span>
+      </div>
+
+      <div class="progress-bar-bg">
+        <div
+          class="progress-bar-fill"
+          [style.width.%]="stat.percentageOfTotal"
+          [style.background-color]="stat.color"
+        ></div>
+      </div>
+    </div>
+  </div>
+</div>
